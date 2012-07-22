@@ -32,9 +32,9 @@ class IrcThread(threading.Thread):
 		return self.s.send("JOIN %s\r\n" % channel)
 
 	def kick(self,user):
-		return self.s.send("KICK %s \r\n" % user)
+		return self.s.send("KICK %s\r\n" % user)
 
-	def quit(self,reason):
+	def quit(self,reason): # DOESN'T WORK ATM
 		self.die = True
 		return self.s.send("QUIT "+reason)
 
@@ -80,12 +80,12 @@ class IrcThread(threading.Thread):
 			self.chanmsg(msg)
 
 	def run(self):
-		readbuffer=""
+		readbuffer = ""
 		die = False
 
 		self.s.connect((self.conserver,6667))
 		self.nick(self.connick)
-		self.ident(self.connick, self.conserver, "", self.connick)
+		self.ident(self.connick, self.conserver, "blah", self.connick)
 
 		while True:
 			# Simple readbuffer.
